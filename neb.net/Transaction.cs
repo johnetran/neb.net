@@ -4,7 +4,7 @@ using System.Numerics;
 using System.Text;
 using System.Web;
 using Google.Protobuf;
-using NebulasNetCore.Utils;
+using Nebulas.Utils;
 
 namespace Nebulas
 {
