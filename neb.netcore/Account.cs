@@ -1,5 +1,5 @@
 ﻿using Cryptography.ECDSA;
-using NebulasNetCore.Utils;
+using Nebulas.Utils;
 using Norgerman.Cryptography.Scrypt;
 using System;
 using System.Collections.Generic;
@@ -257,7 +257,7 @@ namespace Nebulas
             if (kdf == "pbkdf2") {
                 RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
                 crypto.GetBytes(salt);
-                Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, kdfparams.c, HashAlgorithmName.SHA256);
+                Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, kdfparams.c);
                 derivedKey = pbkdf2.GetBytes(kdfparams.dklen);
             } else if (kdf == "scrypt") {
                 derivedKey = ScryptUtil.Scrypt(CryptoUtils.HexStringToByteArray(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen);
@@ -377,7 +377,7 @@ namespace Nebulas
 
                 RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
                 crypto.GetBytes(CryptoUtils.HexStringToByteArray(kdfparams.salt));
-                Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(CryptoUtils.HexStringToByteArray(password), CryptoUtils.HexStringToByteArray(kdfparams.salt), kdfparams.c, HashAlgorithmName.SHA256);
+                Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(CryptoUtils.HexStringToByteArray(password), CryptoUtils.HexStringToByteArray(kdfparams.salt), kdfparams.c);
                 derivedKey = pbkdf2.GetBytes(kdfparams.dklen);
             }
             else

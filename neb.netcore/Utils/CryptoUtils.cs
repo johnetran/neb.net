@@ -7,7 +7,7 @@ using System.Text;
 using Cryptography.ECDSA;
 using HashLib;
 
-namespace NebulasNetCore.Utils
+namespace Nebulas.Utils
 {
     public static class CryptoUtils
     {

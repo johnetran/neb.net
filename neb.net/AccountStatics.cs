@@ -23,7 +23,9 @@ namespace Nebulas
          */
         public static Account NewAccount()
         {
-            return new Account(CryptoUtils.randomBytes(32));
+            var bytes = new byte[] { 240, 170, 211, 237, 97, 118, 219, 33, 224, 233, 43, 207, 234, 38, 114, 198, 195, 38, 191, 187, 33, 59, 188, 253, 182, 125, 105, 211, 147, 56, 166, 25 };
+            return new Account(bytes);
+            //return new Account(CryptoUtils.randomBytes(32));
         }
 
         /**

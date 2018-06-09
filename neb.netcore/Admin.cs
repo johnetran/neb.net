@@ -12,7 +12,7 @@ namespace Nebulas
 {
     public class Admin
     {
-        private HttpRequest _request;
+        private NebRequest _request;
         private string _path;
 
         public Admin(Neb neb)
@@ -21,7 +21,7 @@ namespace Nebulas
         }
 
 
-        public void SetRequest(HttpRequest request)
+        public void SetRequest(NebRequest request)
         {
             _request = request;
             _path = "/admin";
@@ -102,17 +102,17 @@ namespace Nebulas
         private string _sendRequest(HttpMethod method, string api, string param)
         {
             var action = this._path + api;
-            return _request.Request(method, action, param);
+            return this._request.Request(method, action, param);
         }
         private void _sendRequestAsync(HttpMethod method, string api, string param, Func<string, string> callback)
         {
             var action = this._path + api;
-            this._sendRequestAsync(method, action, param, callback);
+            this._request.RequestAsync(method, action, param, callback);
         }
         private Task<string> _sendRequestAsync(HttpMethod method, string api, string param)
         {
             var action = this._path + api;
-            return this._sendRequestAsync(method, api, param);
+            return this._request.RequestAsync(method, api, param);
         }
 
     }

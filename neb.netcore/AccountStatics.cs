@@ -1,9 +1,9 @@
 ﻿using Cryptography.ECDSA;
-using NebulasNetCore.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Nebulas.Utils;
 
 namespace Nebulas
 {

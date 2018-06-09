@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nebulas
 {
-    public class HttpRequest
+    public class NebRequest
     {
 
         const bool DEBUGLOG = false;
@@ -18,12 +18,12 @@ namespace Nebulas
         public uint Timeout { get; set; } = 0;
         public string APIVersion { get; set; } = "v1";
 
-        public HttpRequest(string host)
+        public NebRequest(string host)
         {
             this.Host = host;
         }
 
-        public HttpRequest(string host, uint timeout, string apiVersion)
+        public NebRequest(string host, uint timeout, string apiVersion)
         {
             this.Host = host;
             this.Timeout = timeout;

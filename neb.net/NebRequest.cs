@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nebulas
 {
-    public class HttpRequest
+    public class NebRequest
     {
 
         const bool DEBUGLOG = false;
@@ -18,9 +18,16 @@ namespace Nebulas
         public uint Timeout { get; set; } = 0;
         public string APIVersion { get; set; } = "v1";
 
-        public HttpRequest(string host, uint timeout, string apiVersion)
+        public NebRequest(string host)
         {
+            this.Host = host;
+        }
 
+        public NebRequest(string host, uint timeout, string apiVersion)
+        {
+            this.Host = host;
+            this.Timeout = timeout;
+            this.APIVersion = apiVersion;
         }
 
         public void SetHost(string host)
@@ -73,8 +80,10 @@ namespace Nebulas
 
             var request = new HttpRequestMessage(method, this.createUrl(api))
             {
-                Content = new StringContent(payload)
+                Content = new StringContent(payload),
             };
+
+            request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             var response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).Result;
             if (response.IsSuccessStatusCode)
