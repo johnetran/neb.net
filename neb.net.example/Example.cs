@@ -63,6 +63,7 @@ namespace Nebulas.Example
         }
 
         delegate void StringArgReturningVoidDelegate(string text);
+        delegate void TexBoxStringArgReturningVoidDelegate(TextBox textbox, string text);
 
         private void SetBalance(string text)
         {
@@ -79,6 +80,31 @@ namespace Nebulas.Example
                 this.txtBalance.Text = text;
             }
         }
+        private void SetText(TextBox textbox, string text)
+        {
+            // InvokeRequired required compares the thread ID of the  
+            // calling thread to the thread ID of the creating thread.  
+            // If these threads are different, it returns true.  
+            if (textbox.InvokeRequired)
+            {
+                TexBoxStringArgReturningVoidDelegate d = new TexBoxStringArgReturningVoidDelegate(SetText);
+                this.Invoke(d, new object[] { textbox, text });
+            }
+            else
+            {
+                textbox.Text = text;
+            }
+        }
 
+        private void GetBalance_Click(object sender, EventArgs e)
+        {
+
+            var neb = new Neb("https://testnet.nebulas.io");
+            neb.Api.GetAccountState(new GetAccountStateOptions
+            {
+                address = txtAddress.Text
+            }).ContinueWith((task) => { SetText(txtResult, task.Result); });
+
+        }
     }
 }

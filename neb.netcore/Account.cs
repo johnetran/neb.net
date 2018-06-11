@@ -57,13 +57,13 @@ namespace Nebulas
 
     public partial class Account
     {
-        const int ADDRESSLENGTH = 26;
-        const int ADDRESSPREFIX = 25;
-        const int NORMALTYPE = 87;
-        const int CONTRACTTYPE = 88;
+        public const int ADDRESSLENGTH = 26;
+        public const int ADDRESSPREFIX = 25;
+        public const int NORMALTYPE = 87;
+        public const int CONTRACTTYPE = 88;
 
-        const int KEYVERSION3 = 3;
-        const int KEYCURRENTVERSION = 4;
+        public const int KEYVERSION3 = 3;
+        public const int KEYCURRENTVERSION = 4;
 
         public string Path { get; set; }
         public byte[] PrivKey { get; set; }
@@ -236,6 +236,11 @@ namespace Nebulas
          *
          * @example var key = account.toKey("passphrase");
          */
+
+        public Key ToKey(string password)
+        {
+            return ToKey(password, null);
+        }
         public Key ToKey(string password, KeyOptions opts)
         {
             /*jshint maxcomplexity:16 */
@@ -260,7 +265,7 @@ namespace Nebulas
                 Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, kdfparams.c);
                 derivedKey = pbkdf2.GetBytes(kdfparams.dklen);
             } else if (kdf == "scrypt") {
-                derivedKey = ScryptUtil.Scrypt(CryptoUtils.HexStringToByteArray(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen);
+                derivedKey = ScryptUtil.Scrypt(Encoding.UTF8.GetBytes(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen);
             } else {
                 throw new Exception("Unsupported kdf");
             }
@@ -268,11 +273,11 @@ namespace Nebulas
             // TODO: need to handle other algos
             AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
             aes.BlockSize = 128;
-            aes.KeySize = kdfparams.dklen;
+            //aes.KeySize = kdfparams.dklen;
             aes.IV = iv;
             aes.Key = new byte[16];
             Array.Copy(derivedKey, 0, aes.Key, 0, 16);
-            aes.Mode = CipherMode.CTS;
+            //aes.Mode = CipherMode.CBC;
 
             byte[] src = this.PrivKey;
             byte[] dest = new byte[0];
@@ -286,13 +291,21 @@ namespace Nebulas
             Array.Copy(src, 0, ciphertext, 0, src.Length);
             Array.Copy(dest, 0, ciphertext, src.Length, dest.Length);
 
+            /*
             var _derivedKey = new byte[32];
             Array.Copy(derivedKey, 16, _derivedKey, 0, 32);
+            */
+
+            var _derivedKey = derivedKey;
 
             var algoStr = opts.cipher ?? "aes-128-ctr";
-            var algoBuf = CryptoUtils.HexStringToByteArray(algoStr);
+            var algoBuf = Encoding.UTF8.GetBytes(algoStr);
 
             var mac = new byte[_derivedKey.Length + ciphertext.Length + iv.Length + algoBuf.Length];
+            Array.Copy(_derivedKey, 0, mac, 0, _derivedKey.Length);
+            Array.Copy(ciphertext, 0, mac, _derivedKey.Length, ciphertext.Length);
+            Array.Copy(iv, 0, mac, _derivedKey.Length + ciphertext.Length, iv.Length);
+            Array.Copy(algoBuf, 0, mac, _derivedKey.Length + ciphertext.Length + iv.Length, algoBuf.Length);
 
             /*
             var cipher = CryptoUtils.crypto.createCipheriv(opts.cipher || 'aes-128-ctr', derivedKey.slice(0, 16), iv);
@@ -313,14 +326,14 @@ namespace Nebulas
                 id = Guid.NewGuid().ToByteArray(),
                 address = this.GetAddressString(),
                 crypto = new KeyCrypto {
-                    ciphertext = CryptoUtils.bufferToHex(ciphertext),
+                    ciphertext = CryptoUtils.bufferToHex(ciphertext).Substring(2),
                     cipherparams = new CipherParams {
-                        iv = CryptoUtils.bufferToHex(iv)
+                        iv = CryptoUtils.bufferToHex(iv).Substring(2)
                     },
                     cipher = opts.cipher ?? "aes-128-ctr",
                     kdf = kdf,
                     kdfparams = kdfparams,
-                    mac = CryptoUtils.bufferToHex(mac),
+                    mac = CryptoUtils.bufferToHex(mac).Substring(2),
                     machash = "sha3256"
                 }
             };
@@ -337,6 +350,10 @@ namespace Nebulas
          *
          * @example var key = account.toKeyString("passphrase");
          */
+        public string ToKeyString(string password)
+        {
+            return ToKeyString(password, null);
+        }
         public string ToKeyString(string password, KeyOptions opts)
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this.ToKey(password, opts));
@@ -365,7 +382,7 @@ namespace Nebulas
             if (json.crypto.kdf == "scrypt")
             {
                 kdfparams = json.crypto.kdfparams;
-                derivedKey = ScryptUtil.Scrypt(CryptoUtils.HexStringToByteArray(password), CryptoUtils.HexStringToByteArray(kdfparams.salt), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen);
+                derivedKey = ScryptUtil.Scrypt(Encoding.UTF8.GetBytes(password), CryptoUtils.HexStringToByteArray(kdfparams.salt), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen);
             }
             else if (json.crypto.kdf == "pbkdf2")
             {
@@ -377,7 +394,7 @@ namespace Nebulas
 
                 RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
                 crypto.GetBytes(CryptoUtils.HexStringToByteArray(kdfparams.salt));
-                Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(CryptoUtils.HexStringToByteArray(password), CryptoUtils.HexStringToByteArray(kdfparams.salt), kdfparams.c);
+                Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(password), CryptoUtils.HexStringToByteArray(kdfparams.salt), kdfparams.c);
                 derivedKey = pbkdf2.GetBytes(kdfparams.dklen);
             }
             else

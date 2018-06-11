@@ -54,27 +54,61 @@ namespace Nebulas.Utils
         public static byte[] sha3(params string[] arguments)
         {
             var value = CombineArgs(arguments);
-
-            Byte[] result = null;
-            using (SHA256 hash = SHA256Managed.Create())
-            {
-                Encoding enc = Encoding.UTF8;
-                result = hash.ComputeHash(enc.GetBytes(value));
-            }
+            var result = sha3(Encoding.UTF8.GetBytes(value));
             return result;
         }
         public static byte[] sha3(params byte[][] arguments)
         {
             var value = CombineArgs(arguments);
-
-            Byte[] result = null;
-            using (SHA256 hash = SHA256Managed.Create())
-            {
-                Encoding enc = Encoding.UTF8;
-                result = hash.ComputeHash(value);
-            }
+            var result = sha3(value);
             return result;
         }
+
+        private static byte[] sha3(byte[] value)
+        {
+            Byte[] result = null;
+
+            /*
+            var str = bufferToHex(value, false);
+            var hash = HashFactory.Crypto.CreateSHA256();
+            var r = hash.ComputeBytes(value);
+            result = r.GetBytes();
+            */
+
+            /*
+            var str = bufferToHex(value, false);
+            var r = hash.ComputeString(str);
+            result = r.GetBytes();
+            */
+
+            /*
+            using (SHA256 hash = SHA256.Create())
+            {
+                result = hash.ComputeHash(value);
+            }
+            */
+
+            /*
+            using (var hash = HMACSHA256.Create())
+            {
+                result = hash.ComputeHash(value);
+            }
+            */
+            /*
+            var sha = new SHA3.SHA3Managed(256);
+            result = sha.ComputeHash(value);
+            */
+
+            /*
+            result = Cryptography.ECDSA.Sha256Manager.GetHash(value);
+            */
+
+            var hash = HMACSHA256.Create("System.Security.Cryptography.HMACSHA256");
+            result = hash.ComputeHash(value);
+
+            return result;
+        }
+
         public static byte[] ripemd160(params string[] arguments) {
 
             var value = CombineArgs(arguments);
@@ -145,12 +179,12 @@ namespace Nebulas.Utils
         // returns hex string from int
         public static string intToHex(int i)
         {
-            var hex = i.ToString("X");
+            var hex = i.ToString("x");
             return "0x" + padToEven(hex);
         }
         public static string intToHex(BigInteger i)
         {
-            var hex = i.ToString("X");
+            var hex = i.ToString("x");
             return "0x" + padToEven(hex);
         }
 
@@ -183,7 +217,7 @@ namespace Nebulas.Utils
         }
 
         public static string padToEven(string value) {
-            if (value.Length % 2 == 0)
+            if (value.Length % 2 != 0)
             {
                 return "0" + value;
             }
@@ -244,8 +278,8 @@ namespace Nebulas.Utils
             return ret;
         }
 
-        public static string bufferToHex(byte[] buf) {
-            return "0x" + BitConverter.ToString(buf).Replace("-", "");
+        public static string bufferToHex(byte[] buf, bool prefix = true) {
+            return (prefix ? "0x" : "") + BitConverter.ToString(buf).Replace("-", "").ToLower();
         }
 
         // convert secp256k1 private key to public key

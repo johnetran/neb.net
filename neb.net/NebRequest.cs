@@ -78,14 +78,16 @@ namespace Nebulas
         {
             Task<string> ret = null;
 
-            var request = new HttpRequestMessage(method, this.createUrl(api))
+            var fullUrl = this.createUrl(api);
+            var request = new HttpRequestMessage(method, fullUrl)
             {
                 Content = new StringContent(payload),
             };
 
             request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            request.Headers.Connection.Add("keep-alive");
 
-            var response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).Result;
+            var response = _httpClient.SendAsync(request).Result;
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content;

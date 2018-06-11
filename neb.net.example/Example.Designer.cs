@@ -39,6 +39,9 @@
             this.txtBalance = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lblKeystore = new System.Windows.Forms.Label();
+            this.txtResult = new System.Windows.Forms.TextBox();
+            this.GetBalance = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnNewAccount
@@ -47,7 +50,7 @@
             this.btnNewAccount.Name = "btnNewAccount";
             this.btnNewAccount.Size = new System.Drawing.Size(118, 23);
             this.btnNewAccount.TabIndex = 0;
-            this.btnNewAccount.Text = "New Account =>";
+            this.btnNewAccount.Text = "New Account";
             this.btnNewAccount.UseVisualStyleBackColor = true;
             this.btnNewAccount.Click += new System.EventHandler(this.btnNewAccount_Click);
             // 
@@ -71,16 +74,16 @@
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(543, 14);
+            this.txtAddress.Location = new System.Drawing.Point(80, 41);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.ReadOnly = true;
             this.txtAddress.Size = new System.Drawing.Size(270, 20);
             this.txtAddress.TabIndex = 3;
+            this.txtAddress.Text = "n1Km3M6wkUgKSD7HFrDMggPYsjY5FPxrXHi";
             // 
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(492, 17);
+            this.lblAddress.Location = new System.Drawing.Point(29, 44);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(45, 13);
             this.lblAddress.TabIndex = 4;
@@ -88,17 +91,17 @@
             // 
             // txtKeyString
             // 
-            this.txtKeyString.Location = new System.Drawing.Point(15, 50);
+            this.txtKeyString.Location = new System.Drawing.Point(495, 60);
             this.txtKeyString.Multiline = true;
             this.txtKeyString.Name = "txtKeyString";
             this.txtKeyString.ReadOnly = true;
-            this.txtKeyString.Size = new System.Drawing.Size(920, 121);
+            this.txtKeyString.Size = new System.Drawing.Size(437, 79);
             this.txtKeyString.TabIndex = 6;
             // 
             // lblAddressStatus
             // 
             this.lblAddressStatus.AutoSize = true;
-            this.lblAddressStatus.Location = new System.Drawing.Point(829, 17);
+            this.lblAddressStatus.Location = new System.Drawing.Point(492, 17);
             this.lblAddressStatus.Name = "lblAddressStatus";
             this.lblAddressStatus.Size = new System.Drawing.Size(35, 13);
             this.lblAddressStatus.TabIndex = 7;
@@ -107,7 +110,7 @@
             // lblBalance
             // 
             this.lblBalance.AutoSize = true;
-            this.lblBalance.Location = new System.Drawing.Point(12, 214);
+            this.lblBalance.Location = new System.Drawing.Point(28, 73);
             this.lblBalance.Name = "lblBalance";
             this.lblBalance.Size = new System.Drawing.Size(46, 13);
             this.lblBalance.TabIndex = 8;
@@ -115,31 +118,61 @@
             // 
             // txtBalance
             // 
-            this.txtBalance.Location = new System.Drawing.Point(67, 211);
+            this.txtBalance.Location = new System.Drawing.Point(81, 70);
             this.txtBalance.Name = "txtBalance";
             this.txtBalance.ReadOnly = true;
-            this.txtBalance.Size = new System.Drawing.Size(284, 20);
+            this.txtBalance.Size = new System.Drawing.Size(171, 20);
             this.txtBalance.TabIndex = 9;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(15, 182);
+            this.textBox1.Location = new System.Drawing.Point(495, 172);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(460, 20);
+            this.textBox1.Size = new System.Drawing.Size(440, 20);
             this.textBox1.TabIndex = 10;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(495, 182);
+            this.textBox2.Location = new System.Drawing.Point(495, 145);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(440, 20);
             this.textBox2.TabIndex = 11;
+            // 
+            // lblKeystore
+            // 
+            this.lblKeystore.AutoSize = true;
+            this.lblKeystore.Location = new System.Drawing.Point(492, 44);
+            this.lblKeystore.Name = "lblKeystore";
+            this.lblKeystore.Size = new System.Drawing.Size(48, 13);
+            this.lblKeystore.TabIndex = 12;
+            this.lblKeystore.Text = "Keystore";
+            // 
+            // txtResult
+            // 
+            this.txtResult.Location = new System.Drawing.Point(495, 198);
+            this.txtResult.Multiline = true;
+            this.txtResult.Name = "txtResult";
+            this.txtResult.Size = new System.Drawing.Size(437, 275);
+            this.txtResult.TabIndex = 15;
+            // 
+            // GetBalance
+            // 
+            this.GetBalance.Location = new System.Drawing.Point(357, 39);
+            this.GetBalance.Name = "GetBalance";
+            this.GetBalance.Size = new System.Drawing.Size(118, 23);
+            this.GetBalance.TabIndex = 16;
+            this.GetBalance.Text = "Get Balance";
+            this.GetBalance.UseVisualStyleBackColor = true;
+            this.GetBalance.Click += new System.EventHandler(this.GetBalance_Click);
             // 
             // frmExample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(947, 535);
+            this.Controls.Add(this.GetBalance);
+            this.Controls.Add(this.txtResult);
+            this.Controls.Add(this.lblKeystore);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtBalance);
@@ -171,6 +204,9 @@
         private System.Windows.Forms.TextBox txtBalance;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label lblKeystore;
+        private System.Windows.Forms.TextBox txtResult;
+        private System.Windows.Forms.Button GetBalance;
     }
 }
 

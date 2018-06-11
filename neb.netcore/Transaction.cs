@@ -176,13 +176,13 @@ namespace Nebulas
             var hash = CryptoUtils.sha3(
                 this.from.GetAddress(),
                 this.to.GetAddress(),
-                CryptoUtils.padToBigEndian(this.value.ToString("X"), 128),
-                CryptoUtils.padToBigEndian(this.nonce.ToString("X"), 64),
-                CryptoUtils.padToBigEndian(this.timestamp.ToString("X"), 64),
+                CryptoUtils.padToBigEndian(this.value.ToString("x"), 128),
+                CryptoUtils.padToBigEndian(this.nonce.ToString("x"), 64),
+                CryptoUtils.padToBigEndian(this.timestamp.ToString("x"), 64),
                 dataBuffer,
-                CryptoUtils.padToBigEndian(this.chainID.ToString("X"), 32),
-                CryptoUtils.padToBigEndian(this.gasPrice.ToString("X"), 128),
-                CryptoUtils.padToBigEndian(this.gasLimit.ToString("X"), 128)
+                CryptoUtils.padToBigEndian(this.chainID.ToString("x"), 32),
+                CryptoUtils.padToBigEndian(this.gasPrice.ToString("x"), 128),
+                CryptoUtils.padToBigEndian(this.gasLimit.ToString("x"), 128)
                 );
             return hash;
         }
