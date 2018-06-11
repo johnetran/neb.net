@@ -100,11 +100,11 @@ namespace Nebulas.Example
         {
 
             var neb = new Neb("https://testnet.nebulas.io");
+
             neb.Api.GetAccountState(new GetAccountStateOptions
             {
                 address = txtAddress.Text
             }).ContinueWith((task) => { SetText(txtResult, task.Result); });
-
         }
     }
 }
