@@ -57,6 +57,9 @@
     <Reference Include="Norgerman.Cryptography.Scrypt, Version=1.0.0.0, Culture=neutral, PublicKeyToken=56770310f8eb3200, processorArchitecture=MSIL">
       <HintPath>..\packages\Norgerman.Cryptography.Scrypt.1.1.1\lib\netstandard2.0\Norgerman.Cryptography.Scrypt.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.3.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SHA3, Version=0.9.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SHA3.0.9.2\lib\net40\SHA3.dll</HintPath>
     </Reference>
@@ -87,6 +90,7 @@
     <Compile Include="Proto\Transaction.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="Utils\CryptoUtils.cs" />
+    <Compile Include="Utils\SHA3Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Proto\Transaction.json" />

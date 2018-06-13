@@ -104,13 +104,11 @@ namespace Nebulas
             var action = this._path + api;
             return this._request.Request(method, action, param);
         }
-        /*
         private void _sendRequestAsync(HttpMethod method, string api, string param, Func<string, string> callback)
         {
             var action = this._path + api;
             this._request.RequestAsync(method, action, param, callback);
         }
-        */
         private Task<string> _sendRequestAsync(HttpMethod method, string api, string param)
         {
             var action = this._path + api;

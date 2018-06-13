@@ -103,8 +103,12 @@ namespace Nebulas.Utils
             result = Cryptography.ECDSA.Sha256Manager.GetHash(value);
             */
 
+            /*
             var hash = HMACSHA256.Create("System.Security.Cryptography.HMACSHA256");
             result = hash.ComputeHash(value);
+            */
+
+            result = Sha3Util.Get256Hash(value);
 
             return result;
         }

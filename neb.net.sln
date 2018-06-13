@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neb.net", "neb.net\neb.net.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neb.net.example", "neb.net.example\neb.net.example.csproj", "{94337F08-9F4E-442A-B947-E243229E24D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neb.netstandard", "neb.netstandard\neb.netstandard.csproj", "{595F4E5B-58A8-4F65-90F4-C49413FBC39F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{94337F08-9F4E-442A-B947-E243229E24D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94337F08-9F4E-442A-B947-E243229E24D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94337F08-9F4E-442A-B947-E243229E24D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595F4E5B-58A8-4F65-90F4-C49413FBC39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595F4E5B-58A8-4F65-90F4-C49413FBC39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595F4E5B-58A8-4F65-90F4-C49413FBC39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595F4E5B-58A8-4F65-90F4-C49413FBC39F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
